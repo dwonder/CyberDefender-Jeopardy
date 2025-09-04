@@ -1,3 +1,4 @@
+
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
@@ -16,6 +17,7 @@ permissions:
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -30,23 +32,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up Node.js # Corrected from "Setup Node"
+      - name: Setup Node
         uses: actions/setup-node@v4
-        # Add these properties for consistency and speed
-        with:
-          node-version: '20'
-          cache: 'npm'
       - name: Install dependencies
-        # Use 'npm ci' for faster, more reliable installs in CI
-        run: npm ci
-      - name: Build project # Corrected from "Build app"
-        run: npm run build
+        run:  npm install
+      - name: Build app
+        run:  npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the output of the build step
+          # Upload entire repository
           path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
