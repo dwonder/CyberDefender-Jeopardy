@@ -1,9 +1,20 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig, loadEnv } from 'vite';
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  // Add this line, replacing 'your-repo-name' with your repository's name
-  base: '/CyberDefender-Jeopardy/', 
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, '.', '');
+    return {
+        // Add this 'base' property for GitHub Pages
+        base: '/CyberDefender-Jeopardy/', // 👈 Replace with your repository name
+
+        define: {
+            'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+            'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        },
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, '.'),
+            }
+        }
+    };
 });
