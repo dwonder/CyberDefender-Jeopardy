@@ -1,0 +1,5 @@
+{
+  "name": "Cyber Jeopardy",
+  "description": "A Jeopardy-style game designed to test cybersecurity knowledge. Players act as a CISO, answering questions to earn points and strengthen defenses against a simulated breach.",
+  "requestFramePermissions": []
+}
